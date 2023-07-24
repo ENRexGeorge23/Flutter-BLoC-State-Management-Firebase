@@ -5,7 +5,7 @@ part 'counter_event.dart';
 part 'counter_state.dart';
 
 class CounterBloc extends HydratedBloc<CounterEvent, CounterState> {
-  CounterBloc() : super(CounterInitial()) {
+  CounterBloc() : super(const CounterInitial()) {
     on<CounterIncrementEvent>((event, emit) {
       emit(IncrementState(state.counterValue + 1));
     });
