@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "823208287177",
+    "project_id": "task-app-firebase-b5ce0",
+    "storage_bucket": "task-app-firebase-b5ce0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:823208287177:android:4a7c6b4d986844d282e618",
+        "android_client_info": {
+          "package_name": "com.example.taskapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "823208287177-i4tcnirf7852hf3re5o7q8gfme601fi7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVSl_nhxNDGMF8EVslRRXpaBOik9uhx9g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "823208287177-i4tcnirf7852hf3re5o7q8gfme601fi7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
