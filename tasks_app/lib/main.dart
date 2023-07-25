@@ -10,17 +10,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HydratedBloc.storage = await HydratedStorage.build(
       storageDirectory: await getApplicationDocumentsDirectory());
-  Bloc.observer = AppBlocObserver();
+
   runApp(MyApp(
     appRouter: AppRouter(),
   ));
-}
-
-class AppBlocObserver extends BlocObserver {
-  @override
-  void onChange(BlocBase bloc, Change change) {
-    super.onChange(bloc, change);
-  }
 }
 
 class MyApp extends StatelessWidget {

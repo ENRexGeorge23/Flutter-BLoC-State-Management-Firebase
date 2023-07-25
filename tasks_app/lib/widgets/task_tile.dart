@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:tasks_app/blocs/bloc_exports.dart';
 import 'package:tasks_app/models/task.dart';
+import 'package:tasks_app/screens/edit_task_screen.dart';
+import 'package:tasks_app/widgets/popup_menu.dart';
 
 class TaskTile extends StatelessWidget {
   const TaskTile({
@@ -16,6 +19,22 @@ class TaskTile extends StatelessWidget {
         : ctx.read<TasksBloc>().add(RemoveTask(task: task));
   }
 
+  void _editTask(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => SingleChildScrollView(
+        child: Container(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: EditTaskScreen(
+            oldTask: tasks,
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -26,7 +45,9 @@ class TaskTile extends StatelessWidget {
           Expanded(
             child: Row(
               children: [
-                const Icon(Icons.star_outline),
+                tasks.isFavorite == false
+                    ? const Icon(Icons.star_outline)
+                    : const Icon(Icons.star),
                 const SizedBox(
                   width: 10,
                 ),
@@ -43,29 +64,45 @@ class TaskTile extends StatelessWidget {
                               tasks.isDone! ? TextDecoration.lineThrough : null,
                         ),
                       ),
-                      Text(DateTime.now().toString()),
+                      Text(DateFormat.yMMMd()
+                          .add_jms()
+                          .format(DateTime.parse(tasks.date))),
                     ],
                   ),
                 ),
               ],
             ),
           ),
-          Checkbox(
-            value: tasks.isDone,
-            onChanged: tasks.isDeleted == false
-                ? (value) {
-                    context.read<TasksBloc>().add(
-                          UpdateTask(task: tasks),
-                        );
-                  }
-                : null,
+          Row(
+            children: [
+              Checkbox(
+                value: tasks.isDone,
+                onChanged: tasks.isDeleted == false
+                    ? (value) {
+                        context.read<TasksBloc>().add(
+                              UpdateTask(task: tasks),
+                            );
+                      }
+                    : null,
+              ),
+              PopUpMenu(
+                  task: tasks,
+                  cancelorDeleteCallback: () =>
+                      _removedOrDeleteTask(context, tasks),
+                  likeOrDislikeCallback: () => context.read<TasksBloc>().add(
+                        MarkFavoriteOrUnfavoriteTask(task: tasks),
+                      ),
+                  editTaskCallback: () {
+                    Navigator.of(context).pop();
+                    _editTask(context);
+                  },
+                  restoreTaskCallback: () => context.read<TasksBloc>().add(
+                        RestoreTask(task: tasks),
+                      ))
+            ],
           ),
         ],
       ),
     );
   }
 }
-
-
-//  return ListTile(
-//       title: 
