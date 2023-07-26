@@ -30,7 +30,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     List<Task> removedTasks = [];
 
     await FirestoreRepository.get().then((value) {
-      value.forEach((task) {
+      for (var task in value) {
         if (task.isDeleted == true) {
           removedTasks.add(task);
         } else {
@@ -43,7 +43,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
             pendingTasks.add(task);
           }
         }
-      });
+      }
     });
     emit(TasksState(
       pendingTasks: pendingTasks,
